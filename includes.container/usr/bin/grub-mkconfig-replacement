@@ -6,4 +6,4 @@ mkdir -p /boot/grub
 
 /usr/libexec/grub-mkconfig "$@"
 # delete this script so users don't accidentally break their system with it
-rm /usr/bin/grub-mkconfig
+rm /usr/local/bin/grub-mkconfig
