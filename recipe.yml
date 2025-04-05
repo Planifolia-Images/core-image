@@ -1,0 +1,47 @@
+name: Planifolia Core
+id: core
+
+stages:
+- id: build
+  base: ghcr.io/archlinux/archlinux:base
+  singlelayer: false
+  labels:
+    maintainer: nisel11
+
+  modules:
+  - name: packages-modules
+    type: includes
+    includes:
+      - modules/00-vanilla-abroot.yml
+      - modules/00-vanilla-apx.yml
+      - modules/01-packages.yml
+      - modules/02-kver-file.yml
+      - modules/03-fswarn.yml
+      - modules/04-boot.yml
+      - modules/05-services.yml
+      - modules/06-init-executable.yml
+
+  - name: zram-config
+    type: shell
+    commands:
+      - pacman -Sy --noconfirm zram-generator
+      - echo -e "[zram0]\nzram-size = min(ram / 2)\ncompression-algorithm = lz4\n" >> /etc/systemd/zram-generator.conf
+
+  - name: polkit-remember-auth
+    type: shell
+    commands:
+    - sed -ie 's/auth_admin/auth_admin_keep/' /usr/share/polkit-1/actions/org.freedesktop.policykit.policy
+
+  - name: fsguard
+    type: fsguard
+    FsGuardLocation: "/usr/sbin/FsGuard"
+    GenerateKey: true
+    FilelistPaths: ["/usr/bin"]
+
+  - name: cleanup2
+    type: shell
+    commands:
+      - rm -rf /var/cache/*
+      - rm -rf /tmp/*
+      - rm -rf /var/tmp/*
+      - rm -rf /sources
