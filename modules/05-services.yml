@@ -1,0 +1,37 @@
+name: enable-services
+type: shell
+commands:
+  - systemctl enable avahi-daemon.service
+  - systemctl enable avahi-daemon.socket
+  - systemctl enable bluetooth.service
+  - systemctl enable e2scrub_reap.service
+  - systemctl enable getty@.service
+  - systemctl enable iptables.service
+  - systemctl enable ModemManager.service
+  - systemctl enable netavark-dhcp-proxy.service
+  - systemctl enable NetworkManager.service
+  - systemctl enable NetworkManager-dispatcher.service
+  - systemctl enable NetworkManager-wait-online.service
+  - systemctl enable nfs-blkmap.service
+  - systemctl enable nmb.service
+  - systemctl enable podman-auto-update.service
+  - systemctl enable podman-clean-transient.service
+  - systemctl enable podman-restart.service
+  - systemctl enable podman.service
+  - systemctl enable rpcbind.service
+  - systemctl enable samba.service
+  - systemctl enable systemd-pstore.service
+  - systemctl enable udisks2.service
+  - systemctl enable winbind.service
+  - systemctl enable wpa_supplicant.service
+  - systemctl enable fwupd.service
+  - systemctl enable iptables.service
+modules:
+- name: devmapper-symlink
+  type: shell
+  commands:
+    - ln -s /usr/lib/libdevmapper.so.1.02 /usr/lib/libdevmapper.so.1.02.1
+- name: fix-pkexec
+  type: shell
+  commands:
+    - sed -i 's|unix-group:wheel|unix-group:sudo|' /usr/share/polkit-1/rules.d/50-default.rules

@@ -1,0 +1,31 @@
+name: packages
+type: shell
+commands:
+  - pacman -Sy --noconfirm netavark \
+                          linux linux-headers \
+                          linux-firmware intel-ucode amd-ucode broadcom-wl b43-fwcutter \
+                          glibc-locales kmod xkeyboard-config \
+                          gnupg ca-certificates spice-vdagent \
+                          nano zsync rsync dialog less curl bash-completion \
+                          sudo acpi polkit bc ibus ibus-table laptop-detect efibootmgr grub systemd-sysvcompat samba shim \
+                          exfatprogs btrfs-progs dosfstools gvfs ntfs-3g lvm2 nfs-utils fuse3 \
+                          pipewire pipewire-pulse pipewire-alsa wireplumber alsa-utils	alsa-utils alsa-lib \
+                          zstd zip unzip \
+                          xdg-utils xdg-user-dirs xdg-user-dirs-gtk \
+                          networkmanager networkmanager-openvpn networkmanager-l2tp networkmanager-openconnect networkmanager-vpnc modemmanager wpa_supplicant wireless_tools wireguard-tools avahi util-linux bluez bluez-obex nss-mdns iputils \
+                          iptables \
+                          dkms bolt joyutils iucode-tool cryptsetup acpi_call-dkms libsasl \
+                          fwupd \
+                          fprintd \
+                          minisign squashfs-tools python
+modules:
+  - name: update
+    type: shell
+    commands:
+      - pacman -Syu --noconfirm
+  - name: man-db
+    type: shell
+    commands:
+      - sed -i "s|NoExtract*|#NoExtract|g" /etc/pacman.conf
+      - pacman -Sy --noconfirm man-db
+      - mandb -c
