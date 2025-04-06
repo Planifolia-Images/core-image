@@ -24,7 +24,6 @@ stages:
   - name: zram-config
     type: shell
     commands:
-      - pacman -Sy --noconfirm zram-generator
       - echo -e "[zram0]\nzram-size = min(ram / 2)\ncompression-algorithm = lz4\n" >> /etc/systemd/zram-generator.conf
 
   - name: polkit-remember-auth

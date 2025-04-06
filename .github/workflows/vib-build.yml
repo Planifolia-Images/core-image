@@ -3,7 +3,7 @@ name: Vib Build
 on:
   push:
     branches:
-      - 'dev'
+      - 'main'
     tags:
       - '*'
   workflow_dispatch:
