@@ -8,8 +8,7 @@ modules:
     commands:
       - mkdir -p /usr/libexec/
       - mv /usr/bin/grub-mkconfig /usr/libexec/
-      - mv /usr/bin/grub-mkconfig-replacement /usr/local/bin/grub-mkconfig
-      - chmod +x /usr/local/bin/grub-mkconfig
+      - mkdir -p /boot/grub
       - mv /usr/bin/update-grub /usr/libexec/
       - chmod +x /usr/libexec/update-grub
       - mv /usr/bin/update-grub-replacement /usr/bin/update-grub

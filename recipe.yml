@@ -34,7 +34,7 @@ stages:
 
   - name: fsguard
     type: fsguard
-    FsGuardLocation: "/usr/sbin/FsGuard"
+    FsGuardLocation: "/usr/libexec/FsGuard"
     GenerateKey: true
     FilelistPaths: ["/usr/bin"]
 
