@@ -5,7 +5,14 @@ source:
   url: https://github.com/nisel11/ABRoot/releases/download/v2.2.0/abrootv2.tar.gz
   checksum: b2bcc724e3370c634f0b410178e41b190b191bb8bade370479cfcdb0b9bf464b
 commands:
-  - pacman -Sy --noconfirm podman containers-common patch wget
   - mkdir -p /usr/bin
   - cp /sources/abroot/abrootv2 /usr/bin/abroot
   - chmod +x /usr/bin/abroot
+modules:
+  - name: abroot-deps
+    type: pacman
+    packages:
+      - podman
+      - containers-common
+      - patch
+      - wget
