@@ -15,11 +15,10 @@ stages:
       - modules/00-vanilla-abroot.yml
       - modules/00-vanilla-apx.yml
       - modules/01-packages.yml
-      - modules/02-kver-file.yml
-      - modules/03-fswarn.yml
-      - modules/04-boot.yml
-      - modules/05-services.yml
-      - modules/06-init-executable.yml
+      - modules/02-fswarn.yml
+      - modules/03-boot.yml
+      - modules/04-services.yml
+      - modules/05-init-executable.yml
 
   - name: zram-config
     type: shell
@@ -35,7 +34,7 @@ stages:
     type: fsguard
     FsGuardLocation: "/usr/libexec/FsGuard"
     GenerateKey: true
-    FilelistPaths: ["/usr/bin"]
+    FilelistPaths: ["/usr"]
 
   - name: cleanup2
     type: shell

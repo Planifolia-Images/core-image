@@ -1,22 +1,22 @@
-name: override-hooks
+name: remove-etc-dracut-conf
 type: shell
 commands:
-  - sed -i '/^#/!s/HOOKS=(.*)/HOOKS=(base udev btrfs autodetect microcode modconf kms keyboard keymap consolefont encrypt block lvm2 filesystems fsck)/g' /etc/mkinitcpio.conf
+  - rm -rf /etc/dracut*
 modules:
   - name: move-boot-scripts
     type: shell
     commands:
       - mkdir -p /usr/libexec/
-      - mv /usr/bin/grub-mkconfig /usr/libexec/
+      - mv /usr/bin/grub-mkconfig /usr/libexec/ # grub-mkconfig
       - mkdir -p /boot/grub
-      - mv /usr/bin/update-grub /usr/libexec/
+      - mv /usr/bin/grub-mkconfig-replacement /usr/bin/grub-mkconfig
+      - chmod +x /usr/bin/grub-mkconfig
+      - mv /usr/bin/update-grub /usr/libexec/   # update-grub
       - chmod +x /usr/libexec/update-grub
       - mv /usr/bin/update-grub-replacement /usr/bin/update-grub
       - chmod +x /usr/bin/update-grub
-  - name: add-execute-rules-to-lpkg
-    type: shell
-    commands:
-      - chmod +x /usr/bin/lpkg
+      - chmod +x /usr/bin/update-initramfs      # update-initramfs
+      - chmod +x /usr/bin/lpkg                  # lpkg
   - name: remove-grub-files
     type: shell
     commands:

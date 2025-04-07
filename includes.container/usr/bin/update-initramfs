@@ -1,0 +1,57 @@
+#!/bin/bash
+
+if [ "$EUID" -ne 0 ]; then
+  echo "Error: This script must be run as root."
+  exit 1
+fi
+
+# With pkexec or sudo --> exit 1
+# In chroot with or without /proc from system --> continue
+if [ "$(stat -c %d:%i /)" != "$(stat -c %d:%i /proc/1/root/.)" ]; then
+  echo ""
+else
+  echo "Use abroot update-initramfs instead."
+  exit 1
+fi
+
+usage() {
+  echo "Usage: $0 -u"
+  exit 1
+}
+
+if [ "$#" -ne 1 ]; then
+  usage
+fi
+
+while getopts "u" opt; do
+  case $opt in
+    u)
+      echo "Generating initramfs and kernel image..."
+      KERNEL_VER=$(basename $(ls -d /usr/lib/modules/* | head -n 1))
+      echo "Using kernel version: $KERNEL_VER"
+      echo "Generating initramfs"
+      dracut --kmoddir "/usr/lib/modules/$KERNEL_VER" \
+              --conf "/usr/share/planifolia/dracut.conf" \
+              --confdir "/usr/share/planifolia/dracut.conf.d" \
+              --kernel-image "/boot/vmlinuz-$KERNEL_VER" \
+              --kver "$KERNEL_VER" \
+              --force \
+              "/boot/initrd.img-$KERNEL_VER"
+      if [ $? -ne 0 ]; then
+         echo "Error generating initramfs"
+         exit 1
+      fi
+      echo "Initramfs updated successfully."
+
+      cp "/usr/lib/modules/$KERNEL_VER/vmlinuz" "/boot/vmlinuz-$KERNEL_VER"
+      if [ $? -ne 0 ]; then
+         echo "Error copying vmlinuz"
+         exit 1
+      fi
+      echo "Vmlinuz copied successfully"
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done

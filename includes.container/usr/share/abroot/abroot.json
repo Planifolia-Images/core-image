@@ -8,16 +8,10 @@
     "name": "nisel11/core",
     "tag": "main",
 
-    "iPkgMngPre": "lpkg --unlock",
-    "iPkgMngPost": "lpkg --lock",
-    "iPkgMngAdd": "pacman -Sy --noconfirm",
-    "iPkgMngRm": "pacman -R --noconfirm",
+    "iPkgMngAdd": "apt-get install -y",
+    "iPkgMngRm": "apt-get remove -y --autoremove",
     "iPkgMngApi": "https://packages.vanillaos.org/api/pkg/{packageName}",
-    "iPkgMngStatus": 2,
-
-    "updateInitramfsCmd": "/usr/bin/lpkg --unlock && /usr/bin/mkinitcpio -P && /usr/bin/lpkg --lock",
-    "updateGrubCmd": "/usr/libexec/grub-mkconfig -o '%s'",
-    "initramfsFormat": "initramfs-%s.img",
+    "iPkgMngStatus": 0,
 
     "differURL": "https://differ.vanillaos.org",
 

@@ -4,6 +4,8 @@ packages:
   - netavark
   - linux
   - linux-headers
+  - dracut
+  - busybox
   - linux-firmware
   - intel-ucode 
   - amd-ucode 
