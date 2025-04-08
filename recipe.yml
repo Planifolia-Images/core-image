@@ -34,7 +34,7 @@ stages:
     type: fsguard
     FsGuardLocation: "/usr/libexec/FsGuard"
     GenerateKey: true
-    FilelistPaths: ["/usr"]
+    FilelistPaths: ["/usr/bin"]
 
   - name: cleanup2
     type: shell
