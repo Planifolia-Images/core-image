@@ -34,4 +34,5 @@ modules:
 - name: fix-pkexec
   type: shell
   commands:
-    - echo -e "\npolkit.addAdminRule(function(action, subject) {\n    return ["\unix-group:sudo"\];\n});\n" >> /usr/share/polkit-1/rules.d/50-default.rules
+    - echo -e '/* -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*- */' > /usr/share/polkit-1/rules.d/50-default.rules
+    - echo -e "\npolkit.addAdminRule(function(action, subject) {\n    if (subject.isInGroup(\"wheel\")) {\n        return [\"unix-group:wheel\"];\n    } else if (subject.isInGroup(\"sudo\")) {\n        return [\"unix-group:sudo\"];\n    }\n});" >> /usr/share/polkit-1/rules.d/50-default.rules
