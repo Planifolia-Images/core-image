@@ -2,7 +2,7 @@ name: abroot
 type: shell
 source:
   type: tar
-  url: https://github.com/nisel11/ABRoot/releases/download/v2.2.1/abrootv2.tar.gz
+  url: https://github.com/Planifolia-Images/ABRoot/releases/download/v2.2.1/abrootv2.tar.gz
   checksum: ee64855a4ad0cfe9b6d2eaafbfac1aa2937eab38bf371f8694b4c4530b8113da
 commands:
   - mkdir -p /usr/bin
