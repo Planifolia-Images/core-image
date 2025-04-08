@@ -1,0 +1,6 @@
+name: compression
+type: pacman
+packages:
+  - zstd
+  - zip
+  - unzip

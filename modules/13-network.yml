@@ -1,0 +1,18 @@
+name: network
+type: pacman
+packages:
+  - networkmanager
+  - networkmanager-openvpn
+  - networkmanager-l2tp
+  - networkmanager-openconnect
+  - networkmanager-vpnc
+  - modemmanager
+  - wpa_supplicant
+  - wireless_tools
+  - wireguard-tools
+  - avahi
+  - bluez
+  - bluez-obex
+  - nss-mdns
+  - iputils
+  - iptables

@@ -1,0 +1,11 @@
+name: utils
+type: pacman
+packages:
+  - util-linux
+  - nano
+  - zsync
+  - rsync
+  - dialog
+  - less
+  - curl
+  - bash-completion

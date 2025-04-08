@@ -12,6 +12,7 @@ modules:
   - name: abroot-deps
     type: pacman
     packages:
+      - netavark
       - podman
       - containers-common
       - patch

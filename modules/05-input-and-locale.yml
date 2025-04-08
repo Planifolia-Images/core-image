@@ -1,0 +1,6 @@
+name: input-and-locale
+type: pacman
+packages:
+  - glibc-locales
+  - kmod 
+  - xkeyboard-config

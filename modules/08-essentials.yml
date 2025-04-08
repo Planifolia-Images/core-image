@@ -1,0 +1,12 @@
+name: essentials
+type: pacman
+packages:
+  - polkit
+  - bc
+  - ibus
+  - ibus-table
+  - laptop-detect
+  - efibootmgr
+  - grub
+  - systemd-sysvcompat
+  - shim

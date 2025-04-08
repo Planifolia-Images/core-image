@@ -1,0 +1,11 @@
+name: fs
+type: pacman
+packages:
+  - exfatprogs
+  - btrfs-progs
+  - dosfstools
+  - gvfs
+  - ntfs-3g
+  - lvm2
+  - nfs-utils
+  - fuse3

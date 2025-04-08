@@ -13,26 +13,27 @@ commands:
   - systemctl enable NetworkManager-dispatcher.service
   - systemctl enable NetworkManager-wait-online.service
   - systemctl enable nfs-blkmap.service
-  - systemctl enable nmb.service
   - systemctl enable podman-auto-update.service
   - systemctl enable podman-clean-transient.service
   - systemctl enable podman-restart.service
   - systemctl enable podman.service
   - systemctl enable rpcbind.service
-  - systemctl enable samba.service
   - systemctl enable systemd-pstore.service
   - systemctl enable udisks2.service
-  - systemctl enable winbind.service
   - systemctl enable wpa_supplicant.service
   - systemctl enable fwupd.service
   - systemctl enable iptables.service
 modules:
-- name: devmapper-symlink
-  type: shell
-  commands:
-    - ln -s /usr/lib/libdevmapper.so.1.02 /usr/lib/libdevmapper.so.1.02.1
-- name: fix-pkexec
-  type: shell
-  commands:
-    - "echo -e '/* -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*- */' > /usr/share/polkit-1/rules.d/50-default.rules"
-    - echo -e "\npolkit.addAdminRule(function(action, subject) {\n    if (subject.isInGroup(\"wheel\")) {\n        return [\"unix-group:wheel\"];\n    } else if (subject.isInGroup(\"sudo\")) {\n        return [\"unix-group:sudo\"];\n    }\n});" >> /usr/share/polkit-1/rules.d/50-default.rules
+  - name: devmapper-symlink
+    type: shell
+    commands:
+      - ln -s /usr/lib/libdevmapper.so.1.02 /usr/lib/libdevmapper.so.1.02.1
+  - name: fix-pkexec
+    type: shell
+    commands:
+      - "echo -e '/* -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*- */' > /usr/share/polkit-1/rules.d/50-default.rules"
+      - echo -e "\npolkit.addAdminRule(function(action, subject) {\n    if (subject.isInGroup(\"wheel\")) {\n        return [\"unix-group:wheel\"];\n    } else if (subject.isInGroup(\"sudo\")) {\n        return [\"unix-group:sudo\"];\n    }\n});" >> /usr/share/polkit-1/rules.d/50-default.rules
+  - name: polkit-remember-auth
+    type: shell
+    commands:
+      - sed -ie 's/auth_admin/auth_admin_keep/' /usr/share/polkit-1/actions/org.freedesktop.policykit.policy

@@ -1,0 +1,27 @@
+name: abroot-manpage
+type: shell
+source:
+  type: tar
+  url: https://github.com/Vanilla-OS/ABRoot/releases/download/v2.1.1/abroot-man.tar.gz
+  checksum: 2437300bdae0316a17bc2e5fc25d3dd356297ccfc14e70c77fa1a410e20eed65
+commands:
+  - mv /sources/abroot-manpage/man/man1/abroot.1 /usr/share/man/man1/
+modules:
+  - name: update
+    type: shell
+    commands:
+      - pacman -Syu --noconfirm
+  - name: man-db
+    type: shell
+    commands:
+      - sed -i "s|NoExtract*|#NoExtract|g" /etc/pacman.conf
+      - pacman -Sy --noconfirm man-db
+      - mandb -c
+  - name: apx-manpage
+    type: shell
+    source:
+      type: tar
+      url: https://github.com/Vanilla-OS/apx/releases/download/v2.4.4/apx-man.tar.gz
+      checksum: caa70a0d592e8387cf8e189f9dc1ea2946ac9a44fd5a06747220b75666e81e27
+    commands:
+      - mv /sources/apx-manpage/man/man1/apx.1 /usr/share/man/man1/

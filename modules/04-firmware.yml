@@ -1,0 +1,8 @@
+name: firmware
+type: pacman
+packages:
+  - linux-firmware
+  - intel-ucode 
+  - amd-ucode 
+  - broadcom-wl 
+  - b43-fwcutter 

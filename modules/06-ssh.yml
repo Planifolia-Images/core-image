@@ -1,0 +1,6 @@
+name: ssh
+type: pacman
+packages:
+  - gnupg
+  - ca-certificates
+  - spice-vdagent

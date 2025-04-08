@@ -1,0 +1,9 @@
+name: sound
+type: pacman
+packages:
+  - pipewire
+  - pipewire-pulse
+  - pipewire-alsa
+  - wireplumber
+  - alsa-utils
+  - alsa-lib

@@ -1,0 +1,11 @@
+name: kernel
+type: pacman
+packages:
+  - linux
+  - linux-headers
+modules:
+  - name: initramfs
+    type: pacman
+    packages:
+      - dracut
+      - busybox

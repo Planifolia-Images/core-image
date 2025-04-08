@@ -14,21 +14,23 @@ stages:
     includes:
       - modules/00-vanilla-abroot.yml
       - modules/00-vanilla-apx.yml
-      - modules/01-packages.yml
-      - modules/02-fswarn.yml
-      - modules/03-boot.yml
-      - modules/04-services.yml
-      - modules/05-init-executable.yml
-
-  - name: zram-config
-    type: shell
-    commands:
-      - echo -e "[zram0]\nzram-size = min(ram / 2)\ncompression-algorithm = lz4\n" >> /etc/systemd/zram-generator.conf
-
-  - name: polkit-remember-auth
-    type: shell
-    commands:
-    - sed -ie 's/auth_admin/auth_admin_keep/' /usr/share/polkit-1/actions/org.freedesktop.policykit.policy
+      - modules/01-manpages.yml
+      - modules/02-kernel.yml
+      - modules/03-fswarn.yml
+      - modules/04-firmware.yml
+      - modules/05-input-and-locale.yml
+      - modules/06-ssh.yml
+      - modules/07-utils.yml
+      - modules/08-essentials.yml
+      - modules/09-fs.yml
+      - modules/10-sound.yml
+      - modules/11-compression.yml
+      - modules/12-xdg.yml
+      - modules/13-network.yml
+      - modules/14-packages.yml
+      - modules/15-boot.yml
+      - modules/16-services.yml
+      - modules/17-init-executable.yml
 
   - name: fsguard
     type: fsguard

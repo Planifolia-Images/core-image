@@ -1,0 +1,19 @@
+name: zram-config
+type: shell
+commands:
+  - echo -e "[zram0]\nzram-size = min(ram / 2)\ncompression-algorithm = lz4\n" >> /etc/systemd/zram-generator.conf
+modules:
+  - name: other-packages
+    type: pacman
+    packages:
+      - bolt
+      - joyutils
+      - iucode-tool
+      - cryptsetup
+      - libsasl
+      - fwupd
+      - fprintd
+      - minisign
+      - squashfs-tools
+      - python
+      - zram-generator
