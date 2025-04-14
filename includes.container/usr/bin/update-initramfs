@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [ "$EUID" -ne 0 ]; then
   echo "Error: This script must be run as root."
@@ -15,43 +16,103 @@ else
 fi
 
 usage() {
-  echo "Usage: $0 -u"
-  exit 1
+    echo "Usage: $0 {-u|-c} [-k {all|<kernel-version>}]"
+    echo "  -u          Update an existing initrd (warns if the file does not exist)"
+    echo "  -c          Create a new initrd"
+    echo "  -k all      Process all found kernel versions (using directories in /usr/lib/modules/*)"
+    echo "  -k <version> Process a specific kernel version (e.g., 6.13.9-arch1-1)"
+    exit 1
 }
 
-if [ "$#" -ne 1 ]; then
-  usage
+if [ "$#" -lt 1 ]; then
+    usage
 fi
 
-while getopts "u" opt; do
-  case $opt in
-    u)
-      echo "Generating initramfs and kernel image..."
-      KERNEL_VER=$(basename $(ls -d /usr/lib/modules/* | head -n 1))
-      echo "Using kernel version: $KERNEL_VER"
-      echo "Generating initramfs"
-      dracut --kmoddir "/usr/lib/modules/$KERNEL_VER" \
-              --conf "/usr/share/planifolia/dracut.conf" \
-              --confdir "/usr/share/planifolia/dracut.conf.d" \
-              --kernel-image "/boot/vmlinuz-$KERNEL_VER" \
-              --kver "$KERNEL_VER" \
-              --force \
-              "/boot/initrd.img-$KERNEL_VER"
-      if [ $? -ne 0 ]; then
-         echo "Error generating initramfs"
-         exit 1
-      fi
-      echo "Initramfs updated successfully."
+MODE=""
+KERNEL_TARGET=""
 
-      cp "/usr/lib/modules/$KERNEL_VER/vmlinuz" "/boot/vmlinuz-$KERNEL_VER"
-      if [ $? -ne 0 ]; then
-         echo "Error copying vmlinuz"
-         exit 1
-      fi
-      echo "Vmlinuz copied successfully"
-      ;;
-    *)
-      usage
-      ;;
-  esac
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        -u)
+            if [ -n "$MODE" ]; then usage; fi
+            MODE="update"
+            ;;
+        -c)
+            if [ -n "$MODE" ]; then usage; fi
+            MODE="create"
+            ;;
+        -k)
+            shift
+            if [ -z "$1" ]; then usage; fi
+            KERNEL_TARGET="$1"
+            ;;
+        *)
+            usage
+            ;;
+    esac
+    shift
 done
+
+if [ -z "$MODE" ]; then
+    usage
+fi
+
+if [ -z "$KERNEL_TARGET" ]; then
+    KERNEL_TARGET="all"
+fi
+
+process_kernel() {
+    local kernel="$1"
+    local initrd="/boot/initrd.img-${kernel}"
+    local kernel_image="/boot/vmlinuz-${kernel}"
+
+    if [ ! -f "$kernel_image" ]; then
+        if [ -f "/usr/lib/modules/${kernel}/vmlinuz" ]; then
+            echo "Copying vmlinuz for kernel ${kernel} from /usr/lib/modules/${kernel}/vmlinuz to ${kernel_image}"
+            cp "/usr/lib/modules/${kernel}/vmlinuz" "$kernel_image"
+        else
+            echo "vmlinuz for kernel ${kernel} not found in /usr/lib/modules/${kernel}, skipping copy."
+        fi
+    else
+        echo "File ${kernel_image} already exists, copy not required."
+    fi
+
+    if [ "$MODE" = "update" ]; then
+        if [ ! -f "$initrd" ]; then
+            echo "Warning: ${initrd} not found; a new file will be created."
+        fi
+    fi
+
+    echo "Generating initramfs for kernel ${kernel} -> ${initrd}"
+    dracut --force \
+           --conf "/usr/share/planifolia/dracut.conf" \
+           --confdir "/usr/share/planifolia/dracut.conf.d" \
+           --kernel-image "${kernel_image}" \
+           --kver "${kernel}" \
+           --kmoddir "/usr/lib/modules/${kernel}" \
+           "${initrd}" "${kernel}"
+
+    if [ $? -eq 0 ]; then
+        echo "Successfully created: ${initrd}"
+    else
+        echo "Error creating: ${initrd}"
+    fi
+}
+
+if [ "$KERNEL_TARGET" = "all" ]; then
+    kernels_found=0
+    for kernel_dir in /usr/lib/modules/*; do
+        if [ -d "$kernel_dir" ]; then
+            kernel_version=$(basename "$kernel_dir")
+            process_kernel "$kernel_version"
+            kernels_found=1
+        fi
+    done
+    if [ $kernels_found -eq 0 ]; then
+        echo "No directories found in /usr/lib/modules/"
+    fi
+else
+    process_kernel "$KERNEL_TARGET"
+fi
+
+echo "Operation ${MODE} completed."
