@@ -1,0 +1,9 @@
+name: graphics
+type: pacman
+packages:
+  - mesa
+  - vulkan-icd-loader
+  - vulkan-radeon
+  - vulkan-mesa-layers
+  - libvdpau
+  - apparmor # Legends say it came here from dark matter 👀

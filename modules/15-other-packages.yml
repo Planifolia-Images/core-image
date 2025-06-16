@@ -16,4 +16,7 @@ modules:
       - minisign
       - squashfs-tools
       - python
+      - accountsservice
+      - power-profiles-daemon
+      - switcheroo-control
       - zram-generator

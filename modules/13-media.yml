@@ -1,0 +1,11 @@
+name: media
+type: pacman
+packages:
+  - ffmpeg
+  - gst-plugins-base
+  - gst-libav
+  - gst-plugins-good
+  - gstreamer-vaapi
+  - gst-plugins-ugly
+  - gstreamer
+  - ffmpegthumbnailer

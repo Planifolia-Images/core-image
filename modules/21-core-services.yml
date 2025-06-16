@@ -24,10 +24,11 @@ commands:
   - systemctl enable fwupd.service
   - systemctl enable iptables.service
 modules:
-  - name: devmapper-symlink
+  - name: abroot-symlinks
     type: shell
     commands:
       - ln -s /usr/lib/libdevmapper.so.1.02 /usr/lib/libdevmapper.so.1.02.1
+      - ln -s /usr/lib/libgpgme.so.45 /usr/lib/libgpgme.so.11
   - name: fix-pkexec
     type: shell
     commands:

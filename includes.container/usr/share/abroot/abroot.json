@@ -5,7 +5,7 @@
     "registry": "ghcr.io",
     "registryService": "registry.ghcr.io",
     "registryAPIVersion": "v2",
-    "name": "nisel11/core",
+    "name": "planifolia-images/arch-base",
     "tag": "main",
 
     "iPkgMngAdd": "apt-get install -y",

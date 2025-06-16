@@ -1,0 +1,11 @@
+name: fonts
+type: pacman
+packages:
+  - cantarell-fonts
+  - adwaita-fonts
+  - ttf-dejavu
+  - gnu-free-fonts
+  - noto-fonts
+  - ttf-liberation
+  - ttf-tibetan-machine
+  - noto-fonts-cjk

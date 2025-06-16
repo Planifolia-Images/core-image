@@ -1,8 +1,8 @@
-# Planifolia Core Image
+# Planifolia Arch Base Image
 
-Containerfile for building a Planifolia Core image.
+Containerfile for building a Planifolia Arch Base image.
 
-This image is based on official ArchLinux docker image and may have issues from it :)
+This image is based on official ArchLinux docker image
 
 > [!CAUTION]
 > This image is experimental and isn't suitable for production. If you encounter any bugs during testing, please report them in this repository.

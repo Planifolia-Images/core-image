@@ -1,0 +1,14 @@
+name: enable-plymouth-theme
+type: shell
+commands:
+  - plymouth-set-default-theme vanilla-bgrt
+modules:
+  - name: plymouth
+    type: pacman
+    packages:
+      - plymouth
+      - plymouth-theme-vanilla
+  - name: add-plymouth-hook
+    type: shell
+    commands:
+      - echo -e '\nadd_dracutmodules+=" plymouth "\n' >> /usr/lib/planifolia/dracut.conf.d/planifolia.conf

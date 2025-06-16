@@ -85,8 +85,8 @@ process_kernel() {
 
     echo "Generating initramfs for kernel ${kernel} -> ${initrd}"
     dracut --force \
-           --conf "/usr/share/planifolia/dracut.conf" \
-           --confdir "/usr/share/planifolia/dracut.conf.d" \
+           --conf "/usr/lib/planifolia/dracut.conf" \
+           --confdir "/usr/lib/planifolia/dracut.conf.d" \
            --kernel-image "${kernel_image}" \
            --kver "${kernel}" \
            --kmoddir "/usr/lib/modules/${kernel}" \

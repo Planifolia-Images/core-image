@@ -1,40 +1,67 @@
-name: Planifolia Core
-id: core
+name: Planifolia Arch Base
+id: arch-base
+vibversion: 1.0.2
 
 stages:
 - id: build
   base: ghcr.io/archlinux/archlinux:base
-  singlelayer: false
+  addincludes: true
   labels:
     maintainer: nisel11
 
   modules:
+  - name: init-setup
+    type: shell
+    commands:
+    - echo 'PATH="/usr/bin:/bin"' > /etc/environment # sbin not needed coz Arch and Fedora have sbin as symlink to bin, other paths not needed for other reasons
+    - pacman -Syu --noconfirm
+    modules:
+      - name: vanilla-tools
+        type: shell
+        sources:
+          - type: tar
+            url: https://github.com/Vanilla-OS/vanilla-tools/releases/download/v1.0.0/vanilla-tools.tar.gz
+            checksum: 0e1d92d9c9154f9a115e97b40ff692afa52ddd0d9f770a8ec67440bf1a48aa72
+        commands:
+        - mkdir -p /usr/bin
+        - cp /sources/vanilla-tools/vanilla-tools/vanilla-tools/cur-gpu /usr/bin/cur-gpu
+        - chmod +x /usr/bin/cur-gpu
+      - name: fix-groups-for-rebasing
+        type: shell
+        commands:
+        - sed -i 's|g adm     -|g adm     4|' /usr/lib/sysusers.d/basic.conf
+        - sed -i 's|g users   -|g users   100|' /usr/lib/sysusers.d/basic.conf
+        - sed -i '/^adm\|^group/d' /etc/group
+
   - name: packages-modules
     type: includes
     includes:
-      - modules/00-vanilla-abroot.yml
-      - modules/00-vanilla-apx.yml
-      - modules/01-manpages.yml
-      - modules/02-kernel.yml
-      - modules/03-fswarn.yml
-      - modules/04-firmware.yml
-      - modules/05-input-and-locale.yml
-      - modules/06-ssh.yml
-      - modules/07-utils.yml
-      - modules/08-essentials.yml
-      - modules/09-fs.yml
-      - modules/10-sound.yml
-      - modules/11-compression.yml
-      - modules/12-xdg.yml
-      - modules/13-network.yml
-      - modules/14-packages.yml
-      - modules/15-boot.yml
-      - modules/16-services.yml
-      - modules/17-init-executable.yml
+    - modules/01-vanilla-apps.yml
+    - modules/02-kernel.yml
+    - modules/03-fswarn.yml
+    - modules/04-firmware.yml
+    - modules/05-input-and-locale.yml
+    - modules/06-plymouth.yml
+    - modules/07-fonts.yml
+    - modules/08-essentials.yml
+    - modules/09-compression.yml
+    - modules/10-boot.yml
+    - modules/11-fs.yml
+    - modules/12-graphics.yml
+    - modules/13-media.yml
+    - modules/14-network.yml
+    - modules/15-other-packages.yml
+    - modules/16-printers.yml
+    - modules/17-sound.yml
+    - modules/18-ssh.yml
+    - modules/19-utils.yml
+    - modules/20-xdg.yml
+    - modules/21-core-services.yml
+    - modules/22-base-services.yml
 
   - name: fsguard
     type: fsguard
-    FsGuardLocation: "/usr/libexec/FsGuard"
+    FsGuardLocation: "/usr/lib/planifolia/FsGuard"
     GenerateKey: true
     FilelistPaths: ["/usr/bin"]
 
@@ -44,4 +71,3 @@ stages:
       - rm -rf /var/cache/*
       - rm -rf /tmp/*
       - rm -rf /var/tmp/*
-      - rm -rf /sources

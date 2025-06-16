@@ -8,8 +8,8 @@ show_usage() {
 LOCK=0
 UNLOCK=0
 VERBOSE=0
-DPATH="/usr/bin"
-
+BINPATH="/usr/bin"
+LIBPATH="/usr/lib/planifolia"
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -47,31 +47,31 @@ if [[ $LOCK -eq 0 && $UNLOCK -eq 0 ]]; then
 fi
 
 if [[ $LOCK -eq 1 ]]; then
-    if [[ -f "$DPATH/pacman" ]]; then
+    if [[ -f "$BINPATH/pacman" ]]; then
         [[ $VERBOSE -eq 1 ]] && echo "Locking $DPATH/pacman"
-        mv "$DPATH/pacman" "$DPATH/private.pacman"
+        mv "$BINPATH/pacman" "$LIBPATH/private.pacman"
         if [[ $? -eq 0 ]]; then
             [[ $VERBOSE -eq 1 ]] && echo "pacman locked."
         else
             echo "Warning: Failed to lock pacman."
         fi
     else
-        echo "Error: $DPATH/pacman not found."
+        echo "Error: $BINPATH/pacman not found."
         exit 1
     fi
 fi
 
 if [[ $UNLOCK -eq 1 ]]; then
-    if [[ -f "$DPATH/private.pacman" ]]; then
-        [[ $VERBOSE -eq 1 ]] && echo "Unlocking $DPATH/private.pacman"
-        mv "$DPATH/private.pacman" "$DPATH/pacman"
+    if [[ -f "$LIBPATH/private.pacman" ]]; then
+        [[ $VERBOSE -eq 1 ]] && echo "Unlocking $LIBPATH/private.pacman"
+        mv "$LIBPATH/private.pacman" "$BINPATH/pacman"
         if [[ $? -eq 0 ]]; then
             [[ $VERBOSE -eq 1 ]] && echo "pacman unlocked."
         else
             echo "Warning: Failed to unlock pacman."
         fi
     else
-        echo "Error: $DPATH/private.pacman not found."
+        echo "Error: $LIBPATH/private.pacman not found."
         exit 1
     fi
 fi
