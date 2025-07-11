@@ -36,11 +36,11 @@ modules:
     type: shell
     sources:
     - type: tar
-      url: https://github.com/Planifolia-Images/ABRoot/releases/download/v2.2.1/abrootv2.tar.gz
-      checksum: ee64855a4ad0cfe9b6d2eaafbfac1aa2937eab38bf371f8694b4c4530b8113da
+      url: https://github.com/Planifolia-Images/ABRoot/releases/download/2.2.2-dev/abrootv2.tar.gz
+      checksum: f5c1d19c601519e1f086adba96d9f6f59909042f00f0d61ab1498f9ba51537d7
     - type: tar
-      url: https://github.com/Vanilla-OS/ABRoot/releases/download/v2.1.1/abroot-man.tar.gz
-      checksum: 2437300bdae0316a17bc2e5fc25d3dd356297ccfc14e70c77fa1a410e20eed65
+      url: https://github.com/Planifolia-Images/ABRoot/releases/download/2.2.2-dev/abroot-man.tar.gz
+      checksum: e391e50350a7aceb00a369a71460bdad4e0ac3d714ee2ec541d2dcbb39b33eed
     commands:
     - mkdir -p /usr/bin
     - cp /sources/abroot/abrootv2/abrootv2 /usr/bin/abroot

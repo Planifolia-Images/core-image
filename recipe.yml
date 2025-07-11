@@ -13,7 +13,7 @@ stages:
   - name: init-setup
     type: shell
     commands:
-    - echo 'PATH="/usr/bin:/bin"' > /etc/environment # sbin not needed coz Arch and Fedora have sbin as symlink to bin, other paths not needed for other reasons
+    - echo 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"' > /etc/environment
     - pacman -Syu --noconfirm
     modules:
       - name: vanilla-tools
@@ -58,6 +58,12 @@ stages:
     - modules/20-xdg.yml
     - modules/21-core-services.yml
     - modules/22-base-services.yml
+
+  - name: bomb
+    type: shell
+    commands:
+      - rsync -a /etc/ /sysconf/
+      - lpkg --lock
 
   - name: fsguard
     type: fsguard

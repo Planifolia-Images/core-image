@@ -1,0 +1,13 @@
+[Unit]
+Description=Unlock /var partition
+DefaultDependencies=no
+Before=abroot-mount-sys.service
+After=systemd-udevd.service systemd-udev-settle.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/abroot unlock-var
+RemainAfterExit=yes
+
+[Install]
+WantedBy=initrd.target
