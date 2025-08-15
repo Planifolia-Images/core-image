@@ -11,7 +11,7 @@ packages:
   - vanilla-tour
   - vanilla-updates-utility
   - abroot-rollback-notifier
-  - adwdialog-git
+  - adwdialog
 modules:
   - name: planifolia-repo
     type: shell
