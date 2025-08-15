@@ -10,8 +10,8 @@ modules:
       - mkdir -p /boot/grub
       - mv /usr/bin/grub-mkconfig-replacement /usr/bin/grub-mkconfig
       - chmod +x /usr/bin/grub-mkconfig
-      - chmod +x /usr/bin/update-initramfs      # update-initramfs
-      - chmod +x /usr/bin/lpkg                  # lpkg
+      - chmod +x /usr/bin/update-initramfs # update-initramfs
+      - chmod +x /usr/bin/lpkg # lpkg
   - name: remove-grub-files
     type: shell
     commands:

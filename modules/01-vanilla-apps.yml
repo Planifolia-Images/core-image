@@ -21,31 +21,31 @@ modules:
   - name: set-mimetype
     type: shell
     commands:
-    - mkdir -p /etc/skel/.config
-    - printf '[Default Applications]\n' > /etc/skel/.config/mimeapps.list
-    - printf 'application/vnd.debian.binary-package=org.vanillaos.Sideload.desktop\n' >> /etc/skel/.config/mimeapps.list
+      - mkdir -p /etc/skel/.config
+      - printf '[Default Applications]\n' > /etc/skel/.config/mimeapps.list
+      - printf 'application/vnd.debian.binary-package=org.vanillaos.Sideload.desktop\n' >> /etc/skel/.config/mimeapps.list
 
   - name: man-db
     type: shell
     commands:
-    - sed -i "s|NoExtract*|#NoExtract|g" /etc/pacman.conf
-    - pacman -Sy --noconfirm man-db
-    - mandb -c
+      - sed -i "s|NoExtract*|#NoExtract|g" /etc/pacman.conf
+      - pacman -Sy --noconfirm man-db
+      - mandb -c
 
   - name: abroot
     type: shell
     sources:
-    - type: tar
-      url: https://github.com/Planifolia-Images/ABRoot/releases/download/2.2.2-dev/abrootv2.tar.gz
-      checksum: f5c1d19c601519e1f086adba96d9f6f59909042f00f0d61ab1498f9ba51537d7
-    - type: tar
-      url: https://github.com/Planifolia-Images/ABRoot/releases/download/2.2.2-dev/abroot-man.tar.gz
-      checksum: e391e50350a7aceb00a369a71460bdad4e0ac3d714ee2ec541d2dcbb39b33eed
+      - type: tar
+        url: https://github.com/Planifolia-Images/ABRoot/releases/download/2.2.2-dev/abrootv2.tar.gz
+        checksum: 7cb9b3ce87a52d98a5c2e2690a436e6ac58b389842f3d6c9caaffa4d7a457342
+      - type: tar
+        url: https://github.com/Planifolia-Images/ABRoot/releases/download/2.2.2-dev/abroot-man.tar.gz
+        checksum: 6524c3aac931aa6060d5bb887a669698fdbf234e0b28e66333b881c3e8ee05a9
     commands:
-    - mkdir -p /usr/bin
-    - cp /sources/abroot/abrootv2/abrootv2 /usr/bin/abroot
-    - chmod +x /usr/bin/abroot
-    - mv /sources/abroot/abroot-man/man/man1/abroot.1 /usr/share/man/man1/
+      - mkdir -p /usr/bin
+      - cp /sources/abroot/abrootv2/abrootv2 /usr/bin/abroot
+      - chmod +x /usr/bin/abroot
+      - mv /sources/abroot/abroot-man/man/man1/abroot.1 /usr/share/man/man1/
     modules:
       - name: abroot-deps
         type: pacman
@@ -59,29 +59,29 @@ modules:
   - name: apx
     type: shell
     sources:
-    - type: tar
-      url: https://github.com/Vanilla-OS/apx/releases/download/v2.4.4/apx.tar.gz
-      checksum: 4b56b253fdb70815ce2407faa0aa22a0ae5ab02a389cb5934b0947c3a767ef45
-    - type: tar
-      url: https://github.com/89luca89/distrobox/archive/refs/tags/1.8.1.2.tar.gz
-      checksum: 3ecbce9b8c5b5df941f986798ffa6ea7fdf742223d42204207974c4323d5b9fc
-    - type: git
-      url: https://github.com/Vanilla-OS/vanilla-apx-configs.git
-      tag: v1.0.0
-    - type: tar
-      url: https://github.com/Vanilla-OS/apx/releases/download/v2.4.4/apx-man.tar.gz
-      checksum: caa70a0d592e8387cf8e189f9dc1ea2946ac9a44fd5a06747220b75666e81e27
+      - type: tar
+        url: https://github.com/Vanilla-OS/apx/releases/download/v2.4.4/apx.tar.gz
+        checksum: 4b56b253fdb70815ce2407faa0aa22a0ae5ab02a389cb5934b0947c3a767ef45
+      - type: tar
+        url: https://github.com/89luca89/distrobox/archive/refs/tags/1.8.1.2.tar.gz
+        checksum: 3ecbce9b8c5b5df941f986798ffa6ea7fdf742223d42204207974c4323d5b9fc
+      - type: git
+        url: https://github.com/Vanilla-OS/vanilla-apx-configs.git
+        tag: v1.0.0
+      - type: tar
+        url: https://github.com/Vanilla-OS/apx/releases/download/v2.4.4/apx-man.tar.gz
+        checksum: caa70a0d592e8387cf8e189f9dc1ea2946ac9a44fd5a06747220b75666e81e27
     commands:
-    - mkdir -p /usr/bin
-    - mkdir -p /usr/share/apx
-    - cp /sources/apx/apx/apx /usr/bin/apx
-    - chmod +x /usr/bin/apx
-    - cp -r /sources/apx/1.8.1.2/distrobox-1.8.1.2 /usr/share/apx/distrobox
-    - chmod +x /usr/share/apx/distrobox/distrobox*
-    - sed -E -i 's/.*printf "distrobox.*/echo apx \$(echo ${container_name} | sed "s|apx-||") enter/g' /usr/share/apx/distrobox/distrobox-create
-    - mv /sources/apx/vanilla-apx-configs/stacks /usr/share/apx/
-    - mv /sources/apx/vanilla-apx-configs/package-managers /usr/share/apx/
-    - mv /sources/apx/apx-man/man/man1/apx.1 /usr/share/man/man1/
+      - mkdir -p /usr/bin
+      - mkdir -p /usr/share/apx
+      - cp /sources/apx/apx/apx /usr/bin/apx
+      - chmod +x /usr/bin/apx
+      - cp -r /sources/apx/1.8.1.2/distrobox-1.8.1.2 /usr/share/apx/distrobox
+      - chmod +x /usr/share/apx/distrobox/distrobox*
+      - sed -E -i 's/.*printf "distrobox.*/echo apx \$(echo ${container_name} | sed "s|apx-||") enter/g' /usr/share/apx/distrobox/distrobox-create
+      - mv /sources/apx/vanilla-apx-configs/stacks /usr/share/apx/
+      - mv /sources/apx/vanilla-apx-configs/package-managers /usr/share/apx/
+      - mv /sources/apx/apx-man/man/man1/apx.1 /usr/share/man/man1/
 
   - name: vso
     type: shell
@@ -93,18 +93,18 @@ modules:
         url: https://github.com/Vanilla-OS/vanilla-system-operator/releases/download/v2.0.5/vso-man.tar.gz
         checksum: 192c79a83fe24d329379d4961955b895393b23636473fcb2326bbcf6b7638ef4
     commands:
-    - mkdir -p /usr/bin
-    - cp /sources/vso/vso/vso /usr/bin/vso
-    - chmod +x /usr/bin/vso
-    - mv /sources/vso/vso-man/man/vso.1 /usr/share/man/man1/
-    - chmod +x /usr/bin/reset-vso
-    - chmod +x /usr/bin/wait-for-connection
+      - mkdir -p /usr/bin
+      - cp /sources/vso/vso/vso /usr/bin/vso
+      - chmod +x /usr/bin/vso
+      - mv /sources/vso/vso-man/man/vso.1 /usr/share/man/man1/
+      - chmod +x /usr/bin/reset-vso
+      - chmod +x /usr/bin/wait-for-connection
     modules:
       - name: vanilla-shell-detect
         type: shell
         commands:
-        - chmod +x /usr/bin/vso-os-shell
-        - chmod +x /usr/bin/vanilla-shell-detect
-        - echo "/usr/bin/vanilla-shell-detect" >> /etc/shells
-        - sed -i 's/^\(SHELL=\).*/\1\/usr\/bin\/vanilla-shell-detect/' /etc/default/useradd
-        - chmod u+s /usr/sbin/newuidmap /usr/sbin/newgidmap
+          - chmod +x /usr/bin/vso-os-shell
+          - chmod +x /usr/bin/vanilla-shell-detect
+          - echo "/usr/bin/vanilla-shell-detect" >> /etc/shells
+          - sed -i 's/^\(SHELL=\).*/\1\/usr\/bin\/vanilla-shell-detect/' /etc/default/useradd
+          - chmod u+s /usr/sbin/newuidmap /usr/sbin/newgidmap
