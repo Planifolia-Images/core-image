@@ -3,11 +3,13 @@ Description=Unlock /var partition
 DefaultDependencies=no
 Before=abroot-mount-sys.service
 After=systemd-udevd.service systemd-udev-settle.service
+OnFailure=initrd-emergency.target
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/abroot unlock-var
 RemainAfterExit=yes
+StandardError=journal
 
 [Install]
 WantedBy=initrd.target

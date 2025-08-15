@@ -2,11 +2,13 @@
 Description=Mount system volumes in sysroot
 DefaultDependencies=no
 After=unlock-var.service
+OnFailure=initrd-emergency.target
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/abroot mount-sys --sysroot=/sysroot
 RemainAfterExit=yes
+StandardError=journal
 
 [Install]
 WantedBy=sysinit.target
