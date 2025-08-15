@@ -10,7 +10,7 @@ depends() {
 }
 
 install() {
-    inst_multiple abroot jq
+    inst_multiple abroot
 
     # Add abroot configs
     inst_simple /etc/abroot/abroot.json /etc/abroot/abroot.json
